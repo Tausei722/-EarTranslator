@@ -10,7 +10,7 @@ class AudioSessionManager {
             .playAndRecord,
             mode: .default,
             options: [
-                .allowBluetooth,       // HFP（マイク付きBT）
+                .allowBluetoothHFP,    // HFP（マイク付きBT、AirPods等）
                 .allowBluetoothA2DP,   // A2DP（高音質出力）
                 .defaultToSpeaker      // BT未接続時はスピーカー出力
             ]
