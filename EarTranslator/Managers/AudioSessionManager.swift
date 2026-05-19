@@ -8,10 +8,9 @@ class AudioSessionManager {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(
             .playAndRecord,
-            mode: .default,
+            mode: .voiceChat,          // AEC（エコーキャンセル）有効。BT はHFPに固定
             options: [
                 .allowBluetoothHFP,    // HFP（マイク付きBT、AirPods等）
-                .allowBluetoothA2DP,   // A2DP（高音質出力）
                 .defaultToSpeaker      // BT未接続時はスピーカー出力
             ]
         )

@@ -164,7 +164,9 @@ class TranslatorViewModel: ObservableObject {
             case .b: translationB = result
             case .none: break
             }
-            ttsManager.speak(text: result, languageCode: ttsCode)
+            // A が話した → 翻訳を B の耳（右）へ、B が話した → A の耳（左）へ
+            let pan: Float = speaker == .a ? 1.0 : -1.0
+            ttsManager.speak(text: result, languageCode: ttsCode, pan: pan)
         } catch {
             errorMessage = error.localizedDescription
         }
