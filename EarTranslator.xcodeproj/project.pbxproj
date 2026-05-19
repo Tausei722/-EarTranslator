@@ -24,6 +24,7 @@
 		A3D485C56B970A028B60FA5F /* SpeechRecognitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionManager.swift; sourceTree = "<group>"; };
 		A66EA5744A2649D7BB222F31 /* TTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSManager.swift; sourceTree = "<group>"; };
 		C919A3463DE6483531885549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CE7A440B2FBC5D60008EE5C5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -40,6 +41,7 @@
 		2D9272EFF8522839590B09EC = {
 			isa = PBXGroup;
 			children = (
+				CE7A440B2FBC5D60008EE5C5 /* PrivacyInfo.xcprivacy */,
 				4480B0CCE19FE260F9291AA6 /* EarTranslator */,
 				98C3E442C534FC345241AA5F /* Products */,
 			);
