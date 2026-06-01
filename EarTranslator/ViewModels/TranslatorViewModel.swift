@@ -140,12 +140,16 @@ class TranslatorViewModel: ObservableObject {
         pendingSpeaker = speaker
         pendingTTSCode = ttsCode
 
-        // ID を上げることで .id() が変化し .translationTask を毎回強制再発火
-        translationConfig = TranslationSession.Configuration(
-            source: Locale.Language(identifier: fromCode),
-            target: Locale.Language(identifier: toCode)
-        )
+        // ① nil でビューのタスクをキャンセル ② ID変更でビューを再生成
+        // ③ 次のRunLoopで新しいビューに Config を渡して確実に再発火
+        translationConfig = nil
         translationTaskID += 1
+        DispatchQueue.main.async { [weak self] in
+            self?.translationConfig = TranslationSession.Configuration(
+                source: Locale.Language(identifier: fromCode),
+                target: Locale.Language(identifier: toCode)
+            )
+        }
     }
 
     // MARK: - Translation Execution（ContentView の .translationTask から呼ぶ）
