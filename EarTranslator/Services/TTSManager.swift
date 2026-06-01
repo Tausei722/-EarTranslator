@@ -1,108 +1,82 @@
 import AVFoundation
 import Combine
 
-class TTSManager: NSObject, ObservableObject {
+class TTSManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var isSpeaking = false
 
     private let synthesizer = AVSpeechSynthesizer()
-    private let audioEngine = AVAudioEngine()
-    private let playerNode = AVAudioPlayerNode()
-    private var connectionFormat: AVAudioFormat?
+    private var player: AVAudioPlayer?
+    private var tempFileURL: URL?
     private var speakGeneration = 0
     private let writeQueue = DispatchQueue(label: "tts.write", qos: .userInitiated)
 
-    override init() {
-        super.init()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleRouteChange),
-            name: AVAudioSession.routeChangeNotification,
-            object: nil
-        )
-    }
-
-    /// AudioSessionManager.configure() の直後に呼ぶ
-    func prepare() {
-        setupEngine()
-    }
-
-    // MARK: - Engine Setup
-
-    private func setupEngine() {
-        if audioEngine.isRunning { audioEngine.stop() }
-        audioEngine.attach(playerNode)
-
-        // ハードウェア出力フォーマットで固定接続
-        // → 言語ごとにフォーマットが変わっても接続を変えない（クラッシュ防止）
-        // → iOS が決めたフォーマットなので音声ルートにも正しく乗る
-        let hwFormat = audioEngine.outputNode.outputFormat(forBus: 0)
-        connectionFormat = hwFormat
-        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: hwFormat)
-
-        try? audioEngine.start()
-    }
-
-    @objc private func handleRouteChange(_ notification: Notification) {
-        // イヤホン接続・切断時にエンジンを再構築して新ルートに接続
-        DispatchQueue.main.async { [weak self] in
-            self?.setupEngine()
-        }
-    }
+    func prepare() {}  // AVAudioPlayer はエンジン起動不要
 
     // MARK: - Public API
 
     /// pan: -1.0 = 左耳のみ, 0.0 = 両耳, 1.0 = 右耳のみ
     func speak(text: String, languageCode: String, pan: Float = 0.0) {
         synthesizer.stopSpeaking(at: .immediate)
-        playerNode.stop()
+        player?.stop()
+        cleanupTempFile()
         speakGeneration += 1
         let generation = speakGeneration
 
-        playerNode.pan = pan
         DispatchQueue.main.async { self.isSpeaking = true }
-
-        if !audioEngine.isRunning { try? audioEngine.start() }
-
-        guard let targetFormat = connectionFormat else {
-            DispatchQueue.main.async { self.isSpeaking = false }
-            return
-        }
 
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: languageCode)
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
         utterance.volume = 1.0
 
+        // write() はブロッキングなのでバックグラウンドで実行
         writeQueue.async { [weak self] in
-            guard let self else { return }
+            guard let self, self.speakGeneration == generation else { return }
 
-            self.synthesizer.write(utterance) { [weak self] buffer in
-                guard let self,
-                      let pcmBuffer = buffer as? AVAudioPCMBuffer,
-                      self.speakGeneration == generation else { return }
+            // PCM バッファを収集
+            var buffers: [AVAudioPCMBuffer] = []
+            var format: AVAudioFormat?
 
-                if pcmBuffer.frameLength > 0 {
-                    // TTS の出力フォーマット → ハードウェアフォーマットに変換してスケジュール
-                    if let converted = self.convert(pcmBuffer, to: targetFormat) {
-                        self.playerNode.scheduleBuffer(converted)
-                        if !self.playerNode.isPlaying { self.playerNode.play() }
-                    }
-                } else {
-                    // 合成完了：再生しきったら isSpeaking を下げる
-                    guard let sentinel = AVAudioPCMBuffer(pcmFormat: targetFormat, frameCapacity: 1) else {
-                        DispatchQueue.main.async { [weak self] in
-                            guard let self, self.speakGeneration == generation else { return }
-                            self.isSpeaking = false
-                        }
-                        return
-                    }
-                    sentinel.frameLength = 1
-                    self.playerNode.scheduleBuffer(sentinel, completionCallbackType: .dataPlayedBack) { [weak self] _ in
-                        DispatchQueue.main.async {
-                            guard let self, self.speakGeneration == generation else { return }
-                            self.isSpeaking = false
-                        }
-                    }
+            self.synthesizer.write(utterance) { buffer in
+                guard let pcm = buffer as? AVAudioPCMBuffer, pcm.frameLength > 0 else { return }
+                if format == nil { format = pcm.format }
+                buffers.append(pcm)
+            }
+
+            guard self.speakGeneration == generation,
+                  let fmt = format, !buffers.isEmpty else {
+                DispatchQueue.main.async { [weak self] in self?.isSpeaking = false }
+                return
+            }
+
+            // 一時 CAF ファイルに書き出す
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString + ".caf")
+            do {
+                let file = try AVAudioFile(forWriting: url, settings: fmt.settings)
+                for buf in buffers { try file.write(from: buf) }
+            } catch {
+                DispatchQueue.main.async { [weak self] in self?.isSpeaking = false }
+                return
+            }
+
+            // AVAudioPlayer で再生（pan 対応 ＋ iOS ルーティング自動追従）
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.speakGeneration == generation else {
+                    try? FileManager.default.removeItem(at: url)
+                    return
+                }
+                do {
+                    let p = try AVAudioPlayer(contentsOf: url)
+                    p.pan = pan
+                    p.delegate = self
+                    p.prepareToPlay()
+                    p.play()
+                    self.player = p
+                    self.tempFileURL = url
+                } catch {
+                    try? FileManager.default.removeItem(at: url)
+                    self.isSpeaking = false
                 }
             }
         }
@@ -110,31 +84,29 @@ class TTSManager: NSObject, ObservableObject {
 
     func stop() {
         synthesizer.stopSpeaking(at: .immediate)
-        playerNode.stop()
+        player?.stop()
+        cleanupTempFile()
         speakGeneration += 1
         DispatchQueue.main.async { self.isSpeaking = false }
     }
 
-    // MARK: - Format Conversion
+    // MARK: - AVAudioPlayerDelegate
 
-    private func convert(_ input: AVAudioPCMBuffer, to target: AVAudioFormat) -> AVAudioPCMBuffer? {
-        if input.format == target { return input }
-        guard let converter = AVAudioConverter(from: input.format, to: target) else { return nil }
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully _: Bool) {
+        cleanupTempFile()
+        DispatchQueue.main.async { self.isSpeaking = false }
+    }
 
-        let ratio = target.sampleRate / input.format.sampleRate
-        let capacity = AVAudioFrameCount(Double(input.frameLength) * ratio) + 1
-        guard let output = AVAudioPCMBuffer(pcmFormat: target, frameCapacity: capacity) else { return nil }
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        cleanupTempFile()
+        DispatchQueue.main.async { self.isSpeaking = false }
+    }
 
-        var provided = false
-        let inputBlock: AVAudioConverterInputBlock = { _, status in
-            guard !provided else { status.pointee = .noDataNow; return nil }
-            provided = true
-            status.pointee = .haveData
-            return input
-        }
+    // MARK: - Private
 
-        var error: NSError?
-        converter.convert(to: output, error: &error, withInputFrom: inputBlock)
-        return error == nil ? output : nil
+    private func cleanupTempFile() {
+        guard let url = tempFileURL else { return }
+        try? FileManager.default.removeItem(at: url)
+        tempFileURL = nil
     }
 }
