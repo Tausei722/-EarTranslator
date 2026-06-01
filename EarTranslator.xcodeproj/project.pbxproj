@@ -14,6 +14,7 @@
 		938F859CB31060FDB9AA8105 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */; };
 		C9546F6C9E1013D34D9AB73F /* TTSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66EA5744A2649D7BB222F31 /* TTSManager.swift */; };
 		F86E4EBE407930FA988FE43C /* EarTranslatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */; };
+		EA001122334455667788AABB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA001122334455667788CCDD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		A66EA5744A2649D7BB222F31 /* TTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSManager.swift; sourceTree = "<group>"; };
 		C919A3463DE6483531885549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CE7A440B2FBC5D60008EE5C5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		EA001122334455667788CCDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -50,6 +52,7 @@
 		4480B0CCE19FE260F9291AA6 /* EarTranslator */ = {
 			isa = PBXGroup;
 			children = (
+				EA001122334455667788CCDD /* Assets.xcassets */,
 				EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */,
 				150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */,
 				C919A3463DE6483531885549 /* Info.plist */,
@@ -93,6 +96,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6E14614147AE15CB1DCC60A8 /* Build configuration list for PBXNativeTarget "EarTranslator" */;
 			buildPhases = (
+				EA001122334455667788EEFF /* Resources */,
 				C11C93E3F411CAE1F4D86A7E /* Sources */,
 			);
 			buildRules = (
@@ -133,6 +137,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA001122334455667788EEFF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA001122334455667788AABB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C11C93E3F411CAE1F4D86A7E /* Sources */ = {
