@@ -8,11 +8,17 @@ class AudioSessionManager {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(
             .playAndRecord,
-            mode: .voiceChat,     // AEC有効・BT HFPは自動有効（明示指定不要）
-            options: [
-                .defaultToSpeaker // BT未接続時はスピーカー出力
-            ]
+            mode: .voiceChat,  // AEC有効・BT HFPは自動有効
+            options: []        // .defaultToSpeaker を外す→イヤホン接続時はイヤホンから出力
         )
         try session.setActive(true)
+
+        // イヤホン未接続時のみスピーカーへ出力切り替え
+        let hasExternalOutput = session.currentRoute.outputs.contains {
+            [.headphones, .bluetoothHFP, .bluetoothA2DP, .bluetoothLE].contains($0.portType)
+        }
+        if !hasExternalOutput {
+            try session.overrideOutputAudioPort(.speaker)
+        }
     }
 }
