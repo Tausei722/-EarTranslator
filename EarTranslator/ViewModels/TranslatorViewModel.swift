@@ -141,8 +141,7 @@ class TranslatorViewModel: ObservableObject {
 
         // nil → 値 の変化で ContentView の .translationTask を再トリガー
         translationConfig = nil
-        Task { @MainActor [weak self] in
-            await Task.yield()
+        DispatchQueue.main.async { [weak self] in
             self?.translationConfig = TranslationSession.Configuration(
                 source: Locale.Language(identifier: fromCode),
                 target: Locale.Language(identifier: toCode)
