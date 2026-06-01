@@ -32,6 +32,7 @@ struct ContentView: View {
 
                 Divider()
                     .overlay(statusBar)
+                    .zIndex(1)
 
                 // ---- Speaker A（下半分：自分向き）----
                 SpeakerPanel(
