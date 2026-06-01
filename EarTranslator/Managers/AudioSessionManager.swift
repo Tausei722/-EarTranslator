@@ -12,13 +12,5 @@ class AudioSessionManager {
             options: []        // .defaultToSpeaker を外す→イヤホン接続時はイヤホンから出力
         )
         try session.setActive(true)
-
-        // イヤホン未接続時のみスピーカーへ出力切り替え
-        let hasExternalOutput = session.currentRoute.outputs.contains {
-            [.headphones, .bluetoothHFP, .bluetoothA2DP, .bluetoothLE].contains($0.portType)
-        }
-        if !hasExternalOutput {
-            try session.overrideOutputAudioPort(.speaker)
-        }
     }
 }

@@ -67,8 +67,12 @@ struct ContentView: View {
                 Text(vm.errorMessage ?? "")
             }
             .task { await vm.setup() }
-            .translationTask(vm.translationConfig) { session in
-                await vm.performTranslation(session: session)
+            .background {
+                Color.clear
+                    .translationTask(vm.translationConfig) { session in
+                        await vm.performTranslation(session: session)
+                    }
+                    .id(vm.translationTaskID)
             }
         }
     }

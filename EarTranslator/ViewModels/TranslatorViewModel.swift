@@ -50,8 +50,9 @@ class TranslatorViewModel: ObservableObject {
     @Published var isTranslating = false
     @Published var errorMessage: String?
 
-    // translationTask モディファイア用 — nil → 値 の変化でタスクを再トリガー
+    // translationTask モディファイア用
     @Published var translationConfig: TranslationSession.Configuration?
+    @Published var translationTaskID = 0  // 同一言語ペアでも強制再発火させるカウンター
 
     // MARK: - Internal
     private(set) var pendingText = ""
@@ -68,6 +69,7 @@ class TranslatorViewModel: ObservableObject {
 
     func setup() async {
         try? AudioSessionManager.shared.configure()
+        ttsManager.prepare()
         let granted = await speechManager.requestAuthorization()
         if !granted { errorMessage = "マイクと音声認識の権限が必要です" }
 
@@ -137,21 +139,19 @@ class TranslatorViewModel: ObservableObject {
         pendingText    = text
         pendingSpeaker = speaker
         pendingTTSCode = ttsCode
-        isTranslating  = true
 
-        // nil → 値 の変化で ContentView の .translationTask を再トリガー
-        translationConfig = nil
-        DispatchQueue.main.async { [weak self] in
-            self?.translationConfig = TranslationSession.Configuration(
-                source: Locale.Language(identifier: fromCode),
-                target: Locale.Language(identifier: toCode)
-            )
-        }
+        // ID を上げることで .id() が変化し .translationTask を毎回強制再発火
+        translationConfig = TranslationSession.Configuration(
+            source: Locale.Language(identifier: fromCode),
+            target: Locale.Language(identifier: toCode)
+        )
+        translationTaskID += 1
     }
 
     // MARK: - Translation Execution（ContentView の .translationTask から呼ぶ）
 
     func performTranslation(session: TranslationSession) async {
+        isTranslating = true
         defer { isTranslating = false }
         let text    = pendingText
         let speaker = pendingSpeaker
