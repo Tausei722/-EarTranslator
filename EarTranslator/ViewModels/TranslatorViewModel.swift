@@ -83,6 +83,11 @@ class TranslatorViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        speechManager.onSilenceDetected = { [weak self] in
+            guard let self else { return }
+            self.stopRecording(speaker: self.pendingSpeaker)
+        }
+
         ttsManager.$isSpeaking
             .receive(on: DispatchQueue.main)
             .assign(to: &$isSpeaking)

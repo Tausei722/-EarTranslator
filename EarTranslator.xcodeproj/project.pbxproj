@@ -9,24 +9,25 @@
 /* Begin PBXBuildFile section */
 		0E74C3C5FC51173D70DD9316 /* TranslatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1362456D07AB31D675B60C36 /* TranslatorViewModel.swift */; };
 		214801F8141C3B95C562BAA3 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A288AF10E927751E837D367E /* TranslationService.swift */; };
+		36B34A9962D41F2049E99E30 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 96904C697847B9EA41F282A4 /* PrivacyInfo.xcprivacy */; };
 		6A8128A95AE5A0988ED26051 /* SpeechRecognitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D485C56B970A028B60FA5F /* SpeechRecognitionManager.swift */; };
 		86D00CF2326856B7877C34C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */; };
+		891B490510005D5BC5B7C9DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */; };
 		938F859CB31060FDB9AA8105 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */; };
 		C9546F6C9E1013D34D9AB73F /* TTSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66EA5744A2649D7BB222F31 /* TTSManager.swift */; };
 		F86E4EBE407930FA988FE43C /* EarTranslatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */; };
-		EA001122334455667788AABB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA001122334455667788CCDD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1362456D07AB31D675B60C36 /* TranslatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorViewModel.swift; sourceTree = "<group>"; };
 		150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarTranslatorApp.swift; sourceTree = "<group>"; };
 		28B6BD756D689A16A37FA2F6 /* EarTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EarTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		96904C697847B9EA41F282A4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A288AF10E927751E837D367E /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		A3D485C56B970A028B60FA5F /* SpeechRecognitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionManager.swift; sourceTree = "<group>"; };
 		A66EA5744A2649D7BB222F31 /* TTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSManager.swift; sourceTree = "<group>"; };
 		C919A3463DE6483531885549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		CE7A440B2FBC5D60008EE5C5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		EA001122334455667788CCDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,7 +44,6 @@
 		2D9272EFF8522839590B09EC = {
 			isa = PBXGroup;
 			children = (
-				CE7A440B2FBC5D60008EE5C5 /* PrivacyInfo.xcprivacy */,
 				4480B0CCE19FE260F9291AA6 /* EarTranslator */,
 				98C3E442C534FC345241AA5F /* Products */,
 			);
@@ -52,10 +52,11 @@
 		4480B0CCE19FE260F9291AA6 /* EarTranslator */ = {
 			isa = PBXGroup;
 			children = (
-				EA001122334455667788CCDD /* Assets.xcassets */,
+				A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */,
 				EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */,
 				150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */,
 				C919A3463DE6483531885549 /* Info.plist */,
+				96904C697847B9EA41F282A4 /* PrivacyInfo.xcprivacy */,
 				A1D543D4D1F3D4C5016F844F /* Managers */,
 				94B863C6AC970AAA0B99F3CE /* Services */,
 				16124EBCF0E3CF3DC4CBE619 /* ViewModels */,
@@ -96,8 +97,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6E14614147AE15CB1DCC60A8 /* Build configuration list for PBXNativeTarget "EarTranslator" */;
 			buildPhases = (
-				EA001122334455667788EEFF /* Resources */,
 				C11C93E3F411CAE1F4D86A7E /* Sources */,
+				1378819493725D7D7E69FE37 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -139,11 +140,12 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		EA001122334455667788EEFF /* Resources */ = {
+		1378819493725D7D7E69FE37 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA001122334455667788AABB /* Assets.xcassets in Resources */,
+				891B490510005D5BC5B7C9DF /* Assets.xcassets in Resources */,
+				36B34A9962D41F2049E99E30 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

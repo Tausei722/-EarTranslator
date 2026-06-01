@@ -143,13 +143,11 @@ struct SpeakerPanel: View {
                     .font(.system(size: 30))
                     .foregroundStyle(isRecording ? .white : accentColor)
             }
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { _ in if !isRecording { onPress() } }
-                    .onEnded { _ in if isRecording { onRelease() } }
-            )
+            .onTapGesture {
+                if isRecording { onRelease() } else { onPress() }
+            }
 
-            Text(isRecording ? "録音中... (離すと翻訳)" : "押して話す（\(label)）")
+            Text(isRecording ? "録音中... (無音で自動翻訳)" : "タップして話す（\(label)）")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
