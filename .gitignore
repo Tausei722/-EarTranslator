@@ -1,0 +1,17 @@
+# API Keys (絶対にコミットしない)
+*.p8
+AuthKey_*.p8
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# macOS
+.DS_Store
+
+# Screenshots (作業ファイル)
+スクリーンショット*.png
