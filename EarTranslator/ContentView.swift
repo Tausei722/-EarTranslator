@@ -26,6 +26,8 @@ struct ContentView: View {
                     vm.startRecording(speaker: .b)
                 } onRelease: {
                     vm.stopRecording(speaker: .b)
+                } onReplay: {
+                    vm.replay(speaker: .b)
                 }
                 .rotationEffect(.degrees(180))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -45,6 +47,8 @@ struct ContentView: View {
                     vm.startRecording(speaker: .a)
                 } onRelease: {
                     vm.stopRecording(speaker: .a)
+                } onReplay: {
+                    vm.replay(speaker: .a)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
@@ -117,16 +121,33 @@ struct SpeakerPanel: View {
     let accentColor: Color
     let onPress: () -> Void
     let onRelease: () -> Void
+    let onReplay: () -> Void
 
     var body: some View {
         VStack(spacing: 12) {
             Spacer()
 
-            Text(translation.isEmpty ? " " : translation)
-                .font(.title3.weight(.semibold))
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 20)
-                .foregroundStyle(accentColor)
+            // 翻訳テキスト（タップで再生）
+            if translation.isEmpty {
+                Text(" ")
+                    .font(.title3.weight(.semibold))
+                    .padding(.horizontal, 20)
+            } else {
+                Button(action: onReplay) {
+                    HStack(alignment: .top, spacing: 6) {
+                        Text(translation)
+                            .font(.title3.weight(.semibold))
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(accentColor)
+                        Image(systemName: "speaker.wave.2.fill")
+                            .font(.caption)
+                            .foregroundStyle(accentColor.opacity(0.6))
+                            .padding(.top, 3)
+                    }
+                    .padding(.horizontal, 20)
+                }
+                .buttonStyle(.plain)
+            }
 
             Text(transcript.isEmpty ? " " : transcript)
                 .font(.subheadline)

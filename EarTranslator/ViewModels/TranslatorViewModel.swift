@@ -59,6 +59,10 @@ class TranslatorViewModel: ObservableObject {
     private(set) var pendingSpeaker: Speaker = .none
     private(set) var pendingTTSCode = ""
 
+    // 最後の読み上げを再生するために保持
+    private var lastResultA: (text: String, code: String) = ("", "")
+    private var lastResultB: (text: String, code: String) = ("", "")
+
     private let speechManager = SpeechRecognitionManager()
     private let ttsManager = TTSManager()
     private var cancellables = Set<AnyCancellable>()
@@ -129,6 +133,21 @@ class TranslatorViewModel: ObservableObject {
         requestTranslation(text: text, speaker: speaker)
     }
 
+    // MARK: - Replay
+
+    func replay(speaker: Speaker) {
+        guard !isRecordingA, !isRecordingB else { return }
+        switch speaker {
+        case .a:
+            guard !lastResultA.text.isEmpty else { return }
+            ttsManager.speak(text: lastResultA.text, languageCode: lastResultA.code)
+        case .b:
+            guard !lastResultB.text.isEmpty else { return }
+            ttsManager.speak(text: lastResultB.text, languageCode: lastResultB.code)
+        case .none: break
+        }
+    }
+
     // MARK: - Translation Trigger
 
     private func requestTranslation(text: String, speaker: Speaker) {
@@ -168,11 +187,14 @@ class TranslatorViewModel: ObservableObject {
             let result = response.targetText
 
             switch speaker {
-            case .a: translationA = result
-            case .b: translationB = result
+            case .a:
+                translationA = result
+                lastResultA = (result, ttsCode)
+            case .b:
+                translationB = result
+                lastResultB = (result, ttsCode)
             case .none: break
             }
-            // A が話した → 翻訳を B の耳（右）へ、B が話した → A の耳（左）へ
             let pan: Float = speaker == .a ? 1.0 : -1.0
             ttsManager.speak(text: result, languageCode: ttsCode, pan: pan)
         } catch {
