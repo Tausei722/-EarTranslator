@@ -60,7 +60,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("EarTranslator")
+            .navigationTitle("リオ小池 英語翻訳")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showSettings) {
                 SettingsView(vm: vm)
