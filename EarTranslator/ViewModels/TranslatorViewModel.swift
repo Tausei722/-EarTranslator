@@ -183,7 +183,6 @@ class TranslatorViewModel: ObservableObject {
         guard !text.isEmpty else { return }
 
         do {
-            try await session.prepareTranslation()
             let response = try await session.translate(text)
             let result = response.targetText
 
@@ -199,7 +198,13 @@ class TranslatorViewModel: ObservableObject {
             let pan: Float = speaker == .a ? 1.0 : -1.0
             ttsManager.speak(text: result, languageCode: ttsCode, pan: pan)
         } catch {
-            errorMessage = error.localizedDescription
+            // 翻訳モデル未ダウンロードの場合はガイドメッセージを表示
+            let msg = error.localizedDescription
+            if msg.contains("Unable to Translate") || msg.contains("language") {
+                errorMessage = "翻訳モデルが必要です。設定 → 一般 → 言語と地域 → 翻訳言語 から日本語と対象言語をダウンロードしてください。"
+            } else {
+                errorMessage = msg
+            }
         }
     }
 }
