@@ -183,6 +183,7 @@ class TranslatorViewModel: ObservableObject {
         guard !text.isEmpty else { return }
 
         do {
+            try await session.prepareTranslation()
             let response = try await session.translate(text)
             let result = response.targetText
 
