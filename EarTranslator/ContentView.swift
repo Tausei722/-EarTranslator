@@ -1,5 +1,4 @@
 import SwiftUI
-import Translation
 
 struct ContentView: View {
     @StateObject private var vm = TranslatorViewModel()
@@ -71,13 +70,6 @@ struct ContentView: View {
                 Text(vm.errorMessage ?? "")
             }
             .task { await vm.setup() }
-            .background {
-                Color.clear
-                    .translationTask(vm.translationConfig) { session in
-                        await vm.performTranslation(session: session)
-                    }
-                    .id(vm.translationTaskID)
-            }
         }
     }
 

@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import Translation
 
 struct LanguagePair: Identifiable, Hashable {
     let id = UUID()
@@ -12,7 +11,7 @@ struct LanguagePair: Identifiable, Hashable {
         let name: String
         let locale: String      // SFSpeechRecognizer
         let ttsCode: String     // AVSpeechSynthesisVoice
-        let translateCode: String // Apple Translation / Locale.Language
+        let translateCode: String // ML Kit TranslateLanguage rawValue
     }
 }
 
@@ -25,7 +24,7 @@ let availablePairs: [LanguagePair] = [
     LanguagePair(
         name: "日本語 ↔ 中文",
         langA: .init(name: "日本語", locale: "ja-JP", ttsCode: "ja-JP", translateCode: "ja"),
-        langB: .init(name: "中文", locale: "zh-CN", ttsCode: "zh-CN", translateCode: "zh-Hans")
+        langB: .init(name: "中文", locale: "zh-CN", ttsCode: "zh-CN", translateCode: "zh")
     ),
     LanguagePair(
         name: "日本語 ↔ 한국어",
@@ -50,21 +49,13 @@ class TranslatorViewModel: ObservableObject {
     @Published var isTranslating = false
     @Published var errorMessage: String?
 
-    // translationTask モディファイア用
-    @Published var translationConfig: TranslationSession.Configuration?
-    @Published var translationTaskID = 0  // 同一言語ペアでも強制再発火させるカウンター
-
     // MARK: - Internal
-    private(set) var pendingText = ""
-    private(set) var pendingSpeaker: Speaker = .none
-    private(set) var pendingTTSCode = ""
-
-    // 最後の読み上げを再生するために保持
     private var lastResultA: (text: String, code: String) = ("", "")
     private var lastResultB: (text: String, code: String) = ("", "")
 
     private let speechManager = SpeechRecognitionManager()
     private let ttsManager = TTSManager()
+    private let translationService = TranslationService()
     private var cancellables = Set<AnyCancellable>()
 
     enum Speaker { case none, a, b }
@@ -81,7 +72,7 @@ class TranslatorViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] text in
                 guard let self else { return }
-                switch self.pendingSpeaker {
+                switch self.activeSpeaker {
                 case .a: self.transcriptA = text
                 case .b: self.transcriptB = text
                 case .none: break
@@ -91,7 +82,7 @@ class TranslatorViewModel: ObservableObject {
 
         speechManager.onSilenceDetected = { [weak self] in
             guard let self else { return }
-            self.stopRecording(speaker: self.pendingSpeaker)
+            self.stopRecording(speaker: self.activeSpeaker)
         }
 
         ttsManager.$isSpeaking
@@ -101,10 +92,12 @@ class TranslatorViewModel: ObservableObject {
 
     // MARK: - Recording
 
+    private var activeSpeaker: Speaker = .none
+
     func startRecording(speaker: Speaker) {
         guard !isRecordingA, !isRecordingB else { return }
         ttsManager.stop()
-        pendingSpeaker = speaker
+        activeSpeaker = speaker
 
         let locale = speaker == .a
             ? Locale(identifier: selectedPair.langA.locale)
@@ -130,7 +123,7 @@ class TranslatorViewModel: ObservableObject {
         case .none: return
         }
         guard !text.isEmpty else { return }
-        requestTranslation(text: text, speaker: speaker)
+        Task { await performTranslation(text: text, speaker: speaker) }
     }
 
     // MARK: - Replay
@@ -148,43 +141,18 @@ class TranslatorViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Translation Trigger
+    // MARK: - Translation (ML Kit)
 
-    private func requestTranslation(text: String, speaker: Speaker) {
+    private func performTranslation(text: String, speaker: Speaker) async {
         let fromCode = speaker == .a ? selectedPair.langA.translateCode : selectedPair.langB.translateCode
         let toCode   = speaker == .a ? selectedPair.langB.translateCode : selectedPair.langA.translateCode
         let ttsCode  = speaker == .a ? selectedPair.langB.ttsCode       : selectedPair.langA.ttsCode
 
-        pendingText    = text
-        pendingSpeaker = speaker
-        pendingTTSCode = ttsCode
-
-        // ① nil でビューのタスクをキャンセル ② ID変更でビューを再生成
-        // ③ 次のRunLoopで新しいビューに Config を渡して確実に再発火
-        translationConfig = nil
-        translationTaskID += 1
-        DispatchQueue.main.async { [weak self] in
-            self?.translationConfig = TranslationSession.Configuration(
-                source: Locale.Language(identifier: fromCode),
-                target: Locale.Language(identifier: toCode)
-            )
-        }
-    }
-
-    // MARK: - Translation Execution（ContentView の .translationTask から呼ぶ）
-
-    func performTranslation(session: TranslationSession) async {
         isTranslating = true
         defer { isTranslating = false }
-        let text    = pendingText
-        let speaker = pendingSpeaker
-        let ttsCode = pendingTTSCode
-
-        guard !text.isEmpty else { return }
 
         do {
-            let response = try await session.translate(text)
-            let result = response.targetText
+            let result = try await translationService.translate(text: text, from: fromCode, to: toCode)
 
             switch speaker {
             case .a:
@@ -195,16 +163,9 @@ class TranslatorViewModel: ObservableObject {
                 lastResultB = (result, ttsCode)
             case .none: break
             }
-            let pan: Float = speaker == .a ? 1.0 : -1.0
-            ttsManager.speak(text: result, languageCode: ttsCode, pan: pan)
+            ttsManager.speak(text: result, languageCode: ttsCode)
         } catch {
-            // 翻訳モデル未ダウンロードの場合はガイドメッセージを表示
-            let msg = error.localizedDescription
-            if msg.contains("Unable to Translate") || msg.contains("language") {
-                errorMessage = "翻訳モデルが必要です。設定 → 一般 → 言語と地域 → 翻訳言語 から日本語と対象言語をダウンロードしてください。"
-            } else {
-                errorMessage = msg
-            }
+            errorMessage = "翻訳エラー: \(error.localizedDescription)"
         }
     }
 }
