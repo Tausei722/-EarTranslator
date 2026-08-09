@@ -21,16 +21,6 @@ let availablePairs: [LanguagePair] = [
         langA: .init(name: "日本語", locale: "ja-JP", ttsCode: "ja-JP", translateCode: "ja"),
         langB: .init(name: "English", locale: "en-US", ttsCode: "en-US", translateCode: "en")
     ),
-    LanguagePair(
-        name: "日本語 ↔ 中文",
-        langA: .init(name: "日本語", locale: "ja-JP", ttsCode: "ja-JP", translateCode: "ja"),
-        langB: .init(name: "中文", locale: "zh-CN", ttsCode: "zh-CN", translateCode: "zh")
-    ),
-    LanguagePair(
-        name: "日本語 ↔ 한국어",
-        langA: .init(name: "日本語", locale: "ja-JP", ttsCode: "ja-JP", translateCode: "ja"),
-        langB: .init(name: "한국어", locale: "ko-KR", ttsCode: "ko-KR", translateCode: "ko")
-    ),
 ]
 
 @MainActor

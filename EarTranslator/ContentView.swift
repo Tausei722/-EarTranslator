@@ -88,13 +88,9 @@ struct ContentView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
-                Picker("言語ペア", selection: $vm.selectedPair) {
-                    ForEach(availablePairs) { pair in
-                        Text(pair.name).tag(pair)
-                    }
-                }
-                .pickerStyle(.menu)
-                .font(.caption)
+                Text("日本語 ↔ English")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(.horizontal, 16)
