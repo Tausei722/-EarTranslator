@@ -14,6 +14,7 @@
 		86D00CF2326856B7877C34C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */; };
 		891B490510005D5BC5B7C9DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */; };
 		938F859CB31060FDB9AA8105 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */; };
+		B66AF3A41E1A8CB9C6883FCD /* Pods_EarTranslator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A0C67E7FFC8E9CE6C03BC00 /* Pods_EarTranslator.framework */; };
 		C9546F6C9E1013D34D9AB73F /* TTSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66EA5744A2649D7BB222F31 /* TTSManager.swift */; };
 		F86E4EBE407930FA988FE43C /* EarTranslatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */; };
 /* End PBXBuildFile section */
@@ -21,16 +22,30 @@
 /* Begin PBXFileReference section */
 		1362456D07AB31D675B60C36 /* TranslatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorViewModel.swift; sourceTree = "<group>"; };
 		150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarTranslatorApp.swift; sourceTree = "<group>"; };
+		1A0C67E7FFC8E9CE6C03BC00 /* Pods_EarTranslator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EarTranslator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28B6BD756D689A16A37FA2F6 /* EarTranslator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EarTranslator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96904C697847B9EA41F282A4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		9E07EDB0228E954195655C66 /* Pods-EarTranslator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EarTranslator.release.xcconfig"; path = "Target Support Files/Pods-EarTranslator/Pods-EarTranslator.release.xcconfig"; sourceTree = "<group>"; };
 		A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A288AF10E927751E837D367E /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
 		A3D485C56B970A028B60FA5F /* SpeechRecognitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognitionManager.swift; sourceTree = "<group>"; };
 		A66EA5744A2649D7BB222F31 /* TTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSManager.swift; sourceTree = "<group>"; };
 		C919A3463DE6483531885549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DFC63D0C6C44F8450D1150AA /* Pods-EarTranslator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EarTranslator.debug.xcconfig"; path = "Target Support Files/Pods-EarTranslator/Pods-EarTranslator.debug.xcconfig"; sourceTree = "<group>"; };
 		EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9B8A9C43BC0FB1EBD40F9864 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B66AF3A41E1A8CB9C6883FCD /* Pods_EarTranslator.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		16124EBCF0E3CF3DC4CBE619 /* ViewModels */ = {
@@ -46,6 +61,8 @@
 			children = (
 				4480B0CCE19FE260F9291AA6 /* EarTranslator */,
 				98C3E442C534FC345241AA5F /* Products */,
+				5409D060E73C155EFF7ED288 /* Pods */,
+				B7AB03FD0331DC3D867AA83D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +79,16 @@
 				16124EBCF0E3CF3DC4CBE619 /* ViewModels */,
 			);
 			path = EarTranslator;
+			sourceTree = "<group>";
+		};
+		5409D060E73C155EFF7ED288 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DFC63D0C6C44F8450D1150AA /* Pods-EarTranslator.debug.xcconfig */,
+				9E07EDB0228E954195655C66 /* Pods-EarTranslator.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		94B863C6AC970AAA0B99F3CE /* Services */ = {
@@ -90,6 +117,14 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		B7AB03FD0331DC3D867AA83D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C67E7FFC8E9CE6C03BC00 /* Pods_EarTranslator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -97,16 +132,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6E14614147AE15CB1DCC60A8 /* Build configuration list for PBXNativeTarget "EarTranslator" */;
 			buildPhases = (
+				6EF15F70906616EE12747723 /* [CP] Check Pods Manifest.lock */,
 				C11C93E3F411CAE1F4D86A7E /* Sources */,
 				1378819493725D7D7E69FE37 /* Resources */,
+				9B8A9C43BC0FB1EBD40F9864 /* Frameworks */,
+				1C46DAA6C074A7C7A0D55676 /* [CP] Embed Pods Frameworks */,
+				541687B7D65AA10DCE93163F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = EarTranslator;
-			packageProductDependencies = (
-			);
 			productName = EarTranslator;
 			productReference = 28B6BD756D689A16A37FA2F6 /* EarTranslator.app */;
 			productType = "com.apple.product-type.application";
@@ -150,6 +187,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C46DAA6C074A7C7A0D55676 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EarTranslator/Pods-EarTranslator-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EarTranslator/Pods-EarTranslator-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EarTranslator/Pods-EarTranslator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		541687B7D65AA10DCE93163F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EarTranslator/Pods-EarTranslator-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EarTranslator/Pods-EarTranslator-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EarTranslator/Pods-EarTranslator-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6EF15F70906616EE12747723 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EarTranslator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C11C93E3F411CAE1F4D86A7E /* Sources */ = {
@@ -234,6 +330,7 @@
 		};
 		497B3361D954F2AE56D801DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E07EDB0228E954195655C66 /* Pods-EarTranslator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -309,6 +406,7 @@
 		};
 		8BCC2FE9436C53DE98C85EB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFC63D0C6C44F8450D1150AA /* Pods-EarTranslator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

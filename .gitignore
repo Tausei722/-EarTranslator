@@ -15,3 +15,5 @@ DerivedData/
 
 # Screenshots (作業ファイル)
 スクリーンショット*.png
+# CocoaPods
+Pods/
