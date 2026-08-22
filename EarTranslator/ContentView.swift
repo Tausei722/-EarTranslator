@@ -188,7 +188,7 @@ struct SettingsView: View {
                 }
 
                 Section("翻訳エンジン") {
-                    Label("Apple Translation（完全無料・オンデバイス）", systemImage: "checkmark.circle.fill")
+                    Label("Google ML Kit（完全無料・オンデバイス）", systemImage: "checkmark.circle.fill")
                         .foregroundStyle(.green)
                     Text("初回使用時に言語モデルを自動ダウンロードします")
                         .font(.caption)
