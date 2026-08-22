@@ -333,7 +333,7 @@
 			baseConfigurationReference = 9E07EDB0228E954195655C66 /* Pods-EarTranslator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JRZKVR9C95;
 				INFOPLIST_FILE = EarTranslator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
