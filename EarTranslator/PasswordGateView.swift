@@ -1,6 +1,6 @@
 import SwiftUI
 
-private let correctPassword = "rio-eigo1126"
+private let correctPassword = "1128"
 
 struct PasswordGateView: View {
     @AppStorage("isAuthenticated") private var isAuthenticated = false
