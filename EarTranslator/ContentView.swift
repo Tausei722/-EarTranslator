@@ -175,6 +175,7 @@ struct SpeakerPanel: View {
 
 struct SettingsView: View {
     @ObservedObject var vm: TranslatorViewModel
+    @AppStorage("isAuthenticated") private var isAuthenticated = false
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -193,6 +194,17 @@ struct SettingsView: View {
                     Text("初回使用時に言語モデルを自動ダウンロードします")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                }
+
+                Section {
+                    Button(role: .destructive) {
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            isAuthenticated = false
+                        }
+                    } label: {
+                        Label("ロック", systemImage: "lock.fill")
+                    }
                 }
             }
             .navigationTitle("設定")

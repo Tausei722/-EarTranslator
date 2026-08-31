@@ -12,6 +12,7 @@
 		36B34A9962D41F2049E99E30 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 96904C697847B9EA41F282A4 /* PrivacyInfo.xcprivacy */; };
 		6A8128A95AE5A0988ED26051 /* SpeechRecognitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D485C56B970A028B60FA5F /* SpeechRecognitionManager.swift */; };
 		86D00CF2326856B7877C34C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */; };
+		D1E2F3A4B5C6D7E8F9A0B1C2 /* PasswordGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1A0F9E8D7C6B5A4F3E2D1 /* PasswordGateView.swift */; };
 		891B490510005D5BC5B7C9DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */; };
 		938F859CB31060FDB9AA8105 /* AudioSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */; };
 		B66AF3A41E1A8CB9C6883FCD /* Pods_EarTranslator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A0C67E7FFC8E9CE6C03BC00 /* Pods_EarTranslator.framework */; };
@@ -32,6 +33,7 @@
 		A66EA5744A2649D7BB222F31 /* TTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSManager.swift; sourceTree = "<group>"; };
 		C919A3463DE6483531885549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DFC63D0C6C44F8450D1150AA /* Pods-EarTranslator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EarTranslator.debug.xcconfig"; path = "Target Support Files/Pods-EarTranslator/Pods-EarTranslator.debug.xcconfig"; sourceTree = "<group>"; };
+		C2B1A0F9E8D7C6B5A4F3E2D1 /* PasswordGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGateView.swift; sourceTree = "<group>"; };
 		EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F0D6C7EC3A07F3D7842DA6F1 /* AudioSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 				A10F82319EBBC0D9EB4A7482 /* Assets.xcassets */,
 				EB8CA42D7FE6D5B2CEC5C640 /* ContentView.swift */,
 				150A9E2148543410C4A85A75 /* EarTranslatorApp.swift */,
+				C2B1A0F9E8D7C6B5A4F3E2D1 /* PasswordGateView.swift */,
 				C919A3463DE6483531885549 /* Info.plist */,
 				96904C697847B9EA41F282A4 /* PrivacyInfo.xcprivacy */,
 				A1D543D4D1F3D4C5016F844F /* Managers */,
@@ -255,6 +258,7 @@
 				938F859CB31060FDB9AA8105 /* AudioSessionManager.swift in Sources */,
 				86D00CF2326856B7877C34C4 /* ContentView.swift in Sources */,
 				F86E4EBE407930FA988FE43C /* EarTranslatorApp.swift in Sources */,
+				D1E2F3A4B5C6D7E8F9A0B1C2 /* PasswordGateView.swift in Sources */,
 				6A8128A95AE5A0988ED26051 /* SpeechRecognitionManager.swift in Sources */,
 				C9546F6C9E1013D34D9AB73F /* TTSManager.swift in Sources */,
 				214801F8141C3B95C562BAA3 /* TranslationService.swift in Sources */,
